@@ -5,7 +5,7 @@ import TotalDisplay from "./components/TotalDisplay";
 import CalcButton from "./components/CalcButton";
 import { initialState } from "./reducers";
 import reducer from "./reducers";
-import { ADD_ONE } from "./actions";
+import { ADD_ONE, CLEAR_DİSPLAY, addOne, applyNumber } from "./actions";
 import { APPLY_NUMBER } from "./actions";
 import { CHANGE_OPERATION } from "./actions";
 
@@ -14,7 +14,7 @@ function App() {
   console.log(state);
 
   const handleApplyNumber = (e) => {
-    dispatch.APPLY_NUMBER.Number(e.target.value);
+    dispatch(APPLY_NUMBER.ParseInt(e.target));
   };
 
   return (
@@ -43,26 +43,55 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton value={1} onClick={() => handleApplyNumber(1)} />
-              <CalcButton value={2} onClick={() => handleApplyNumber(2)} />
-              <CalcButton value={3} onClick={() => handleApplyNumber(3)} />
-            </div>
-
-            <div className="row">
-              <CalcButton value={4} onClick={() => handleApplyNumber(4)} />
-              <CalcButton value={5} onClick={() => handleApplyNumber(5)} />
-              <CalcButton value={6} onClick={() => handleApplyNumber(6)} />
-            </div>
-
-            <div className="row">
-              <CalcButton value={7} onClick={() => handleApplyNumber(7)} />
-              <CalcButton value={8} onClick={() => handleApplyNumber(8)} />
-              <CalcButton value={9} onClick={() => handleApplyNumber(9)} />
+              <CalcButton
+                value={1}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
+              <CalcButton
+                value={2}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
+              <CalcButton
+                value={3}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
             </div>
 
             <div className="row">
               <CalcButton
-                onClick={() => dispatch({ type: ADD_ONE })}
+                value={4}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
+              <CalcButton
+                value={5}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
+              <CalcButton
+                value={6}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
+            </div>
+
+            <div className="row">
+              <CalcButton
+                value={7}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
+              <CalcButton
+                value={8}
+                onClick={(e) => {
+                  dispatch(applyNumber(parseInt(e.target.value)));
+                }}
+              />
+              <CalcButton
+                value={9}
+                onClick={(e) => dispatch(applyNumber(e.target.value))}
+              />
+            </div>
+
+            <div className="row">
+              <CalcButton
+                onClick={() => dispatch({ type: CHANGE_OPERATION })}
                 value={"+"}
               />
               <CalcButton value={"*"} />
@@ -70,7 +99,10 @@ function App() {
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"} />
+              <CalcButton
+                value={"CE"}
+                onClick={(e) => dispatch(CLEAR_DİSPLAY(e.target.value))}
+              />
             </div>
           </form>
         </div>
